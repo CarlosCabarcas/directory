@@ -3,7 +3,9 @@
     "description": "Basic user directory",
     "type": "project",
     "require": {
-        "illuminate/database": "5.6"
+        "illuminate/database": "5.6",
+        "nikic/fast-route": "^2.0@dev",
+        "guzzlehttp/guzzle": "^7.1@dev"
     },
     "autoload": {
         "psr-4": {
