@@ -6,15 +6,12 @@ use Windwalker\Renderer\PhpRenderer;
 
 class DirectoryController{
     public function index(){
-        // $data = CustomerData::getUsers();
-        // return json_decode($data);
-
+        $users = CustomerData::getUsers();
+        $data = array('users' => json_decode($users));
 
         $config = array();
 
         $renderer = new PhpRenderer( $_SERVER['DOCUMENT_ROOT'] . '/resources/views', $config);
-
-        $data = array('title' => 'foo');
 
         echo $renderer->render('directory', $data);
     }
