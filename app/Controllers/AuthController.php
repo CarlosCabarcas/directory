@@ -17,6 +17,13 @@ class AuthController{
     }
 
     public function login(){
+        $validate = AuthController::validate();
+        if($validate){
+            AuthController::sigIn();
+        }
+    }
+
+    public function sigIn(){
         $user = User::where('email', '=', $_REQUEST['email_login'])->first();
 
         if($user){
@@ -42,7 +49,51 @@ class AuthController{
                 echo $renderer->render('login', $data);
             }
         }
+    }
 
+    public function validate(){
+        if (!empty($_REQUEST['email_login']) && !empty($_REQUEST['password_login'])) {
+            return true;
+        }else{
+            $message = '<div class="alert alert-danger">
+                Email and Password can not be blank.
+            </div>';
+            AuthController::loginMessage($message);
+            return false;
+        }
+    }
+
+    public function regularExpressions(){
+        $email = $_REQUEST['email_login'];
+        $password = $_REQUEST['password_login'];
+
+        if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $validationMessage .= '<div class="alert alert-danger">
+                    Email: format is invalid.
+                </div>';
+        }
+
+        if(!preg_match("/^(?=.*\d)(?=.*[@#\-_$%^&+=§!\?])(?=.*[a-z])(?=.*[A-Z])[0-9A-Za-z@#\-_$%^&+=§!\?]{6,20}$/", $password)) {
+            $validationMessage .= '<div class="alert alert-danger">
+                     Password: Incorrect format
+                </div>';
+        }
+
+        if ($validationMessage != '') {
+            AuthController::loginMessage($validationMessage);
+            return false;
+        }
+        return true;
+    }
+
+    public function loginMessage($message){
+        $data = array('message' => $message);
+
+        $config = array();
+
+        $renderer = new PhpRenderer( $_SERVER['DOCUMENT_ROOT'] . '/resources/views', $config);
+
+        echo $renderer->render('login', $data);
     }
 
     public function verifySession(){
