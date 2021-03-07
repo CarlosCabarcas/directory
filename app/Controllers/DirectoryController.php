@@ -5,6 +5,10 @@ use App\Entities\CustomerData;
 use Windwalker\Renderer\PhpRenderer;
 
 class DirectoryController{
+    public function __construct() {
+        echo "En el constructor BaseClass\n";
+    }
+
     public function index(){
         $users = CustomerData::getUsers();
         $data = array('users' => json_decode($users));

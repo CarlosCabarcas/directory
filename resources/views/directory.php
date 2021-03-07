@@ -6,8 +6,15 @@ $this->extend('layouts.layout');
 
 <?php $this->block('body');?>
     <article>
-        <h2>User Directory</h2>
-        <?php //print_r($users); ?> 
+        <div class="row">
+            <div class="col-md-10">
+                <h2>User Directory</h2>
+            </div>
+            <div class="col-md-2">
+                <a href="/logout" class="btn btn-light">Logout</a>
+            </div>
+        </div>
+        <?php //print_r($users->objects); ?> 
 
         <table class="table">
             <thead>
@@ -23,23 +30,24 @@ $this->extend('layouts.layout');
                 </tr>
             </thead>
             <tbody>
-                <?php foreach($users as $user) { ?>
-                    <?php foreach($user as $u) { ?>
-                        <tbody>
-                            <tr>
-                            <th scope="row"><?php echo $u->id; ?></th>
-                            <td><?php echo $u->first_name; ?></td>
-                            <td><?php echo $u->last_name; ?></td>
-                            <td><?php echo $u->email; ?></td>
-                            <td><?php echo $u->phone_number; ?></td>
-                            <td><?php echo $u->document; ?></td>
-                            <td><?php echo $u->job_title; ?></td>
-                            <td><?php echo $u->city; ?></td>
-                            </tr>
-                        </tbody>
-                    <?php } ?>
+                <?php foreach($users->objects as $user) { ?>
+                    <tbody>
+                        <tr>
+                        <th scope="row"><?php echo $user->id; ?></th>
+                        <td><?php echo $user->first_name; ?></td>
+                        <td><?php echo $user->last_name; ?></td>
+                        <td><?php echo $user->email; ?></td>
+                        <td><?php echo $user->phone_number; ?></td>
+                        <td><?php echo $user->document; ?></td>
+                        <td><?php echo $user->job_title; ?></td>
+                        <td><?php echo $user->city; ?></td>
+                        </tr>
+                    </tbody>
                 <?php } ?>
             </tbody>
         </table>
     </article>
+<?php $this->endblock(); ?>
+
+<?php $this->block('scripts');?>
 <?php $this->endblock(); ?>

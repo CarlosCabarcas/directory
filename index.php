@@ -7,7 +7,6 @@ include 'routes/web.php';
 
 // $users = App\Entities\User::get();
 
-// Fetch method and URI from somewhere
 $httpMethod = $_SERVER['REQUEST_METHOD'];
 $uri = $_SERVER['REQUEST_URI'];
 // Strip query string (?foo=bar) and decode URI
