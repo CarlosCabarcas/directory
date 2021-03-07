@@ -11,10 +11,23 @@ $this->extend('layouts.layout');
                 <h2>User Directory</h2>
             </div>
             <div class="col-md-2">
-                <a href="/logout" class="btn btn-light">Logout</a>
+                <a href="/logout" class="btn btn-danger">Logout</a>
             </div>
         </div>
-        <?php //print_r($users->objects); ?> 
+
+        <form action="/filter" method="GET">
+            <div class="row">
+                    <div class="col-md-10">
+                        <div class="form-group">
+                            <label for="search">Search</label>
+                            <input type="text" class="form-control" id="search" name="search">
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-light mt-4">Search</button>
+                    </div>
+            </div>
+        </form>
 
         <table class="table">
             <thead>
@@ -30,7 +43,8 @@ $this->extend('layouts.layout');
                 </tr>
             </thead>
             <tbody>
-                <?php foreach($users->objects as $user) { ?>
+            <?php print_r(count((array)$users)); ?>
+                <?php foreach($users as $user) { ?>
                     <tbody>
                         <tr>
                         <th scope="row"><?php echo $user->id; ?></th>

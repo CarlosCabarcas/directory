@@ -41,13 +41,13 @@ class AuthController{
                                 Either email or password is incorrect.
                             </div>';
                             $config = array();
-
-                $data = array('message' => $message);
-
-                $renderer = new PhpRenderer( $_SERVER['DOCUMENT_ROOT'] . '/resources/views', $config);
-
-                echo $renderer->render('login', $data);
+                AuthController::loginMessage($message);
             }
+        }else{
+            $message = '<div class="alert alert-danger">
+                                User not exists.
+                            </div>';
+                AuthController::loginMessage($message);
         }
     }
 
