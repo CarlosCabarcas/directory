@@ -3,11 +3,13 @@
 namespace App\Controllers;
 use App\Entities\CustomerData;
 use Windwalker\Renderer\PhpRenderer;
+use App\Controllers\AuthController;
 use App\Entities\User;
 
 class UserController{
 
     public function registerForm(){
+        AuthController::redirectIsActive();
         $countries = CustomerData::getCountries();
         $data = array('countries' => json_decode($countries));
 
@@ -151,45 +153,5 @@ class UserController{
         </div>';
 
         UserController::registerMessage($validationMessage);
-    }
-
-    public function loginForm(){
-        $config = array();
-
-        $renderer = new PhpRenderer( $_SERVER['DOCUMENT_ROOT'] . '/resources/views', $config);
-
-        echo $renderer->render('login');
-    }
-
-    public function login(){
-        $user = User::where('email', '=', $_REQUEST['email_login'])->first();
-
-        if($user){
-            $password = password_verify($_REQUEST['password_login'], $user->password);
-            if($_REQUEST['email_login'] == $user->email && $_REQUEST['password_login'] == $password) {
-                $user->is_Active = true;
-                $user->save();
-                header('Location: http://localhost:4000/directory');
-            }else{
-                $message = '<div class="alert alert-danger">
-                                Either email or password is incorrect.
-                            </div>';
-                            $config = array();
-
-                $data = array('message' => $message);
-
-                $renderer = new PhpRenderer( $_SERVER['DOCUMENT_ROOT'] . '/resources/views', $config);
-
-                echo $renderer->render('login', $data);
-            }
-        }
-
-    }
-
-    public function logout(){
-        session_start();
-        session_destroy();
-
-        header('Location: http://localhost:4000/login');
     }
 }
